@@ -1,0 +1,49 @@
+apply plugin: 'com.android.model.application'
+
+model {
+    android {
+        compileSdkVersion = 22
+        buildToolsVersion = "22.0.1"
+
+        defaultConfig.with {
+            applicationId = "com.prettysimple.opensl"
+            minSdkVersion.apiLevel = 15
+            targetSdkVersion.apiLevel = 22
+            versionCode = 1
+            versionName = "1.0"
+        }
+    }
+
+    android.ndk {
+        moduleName = "audio"
+        toolchain = "clang"
+        toolchainVersion = "3.6"
+        ldLibs += ["android", "log", "OpenSLES"]
+        CFlags += ["-std=c11"]
+        cppFlags += ["-std=c++11"]
+        stl = "c++_shared"
+    }
+
+    android.buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles += file('proguard-rules.pro')
+        }
+        debug {
+            isJniDebuggable = true
+        }
+    }
+
+    android.productFlavors {
+        create("arm7") {
+            ndk.abiFilters += "armeabi-v7a"
+        }
+        create("arm8") {
+            ndk.abiFilters += "arm64-v8a"
+        }
+        create("x86") {
+            ndk.abiFilters += "x86"
+        }
+        create("fat")
+    }
+}
