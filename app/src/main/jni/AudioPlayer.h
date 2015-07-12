@@ -9,8 +9,10 @@
 #include <cstdint>
 #include <jni.h>
 
-namespace audio {
-    class AudioPlayer {
+namespace audio
+{
+    class AudioPlayer
+    {
     public:
         AudioPlayer();
 
@@ -51,14 +53,10 @@ namespace audio {
 
         void setJavaAudioPlayerObj(const jobject obj) noexcept;
 
-        bool initWithEngine(const SLEngineItf &engineEngine, const SLObjectItf &outputMixObject,
-                            AAssetManager *assetManager, const int audioId,
-                            const std::string &fileFullPath, const float volume,
-                            const bool loop) noexcept;
+        bool initWithEngine(const SLEngineItf &engineEngine, const SLObjectItf &outputMixObject, AAssetManager *assetManager, const int audioId, const std::string &fileFullPath, const float volume, const bool loop) noexcept;
 
     private:
-        static void prefetchEventCallback(SLPrefetchStatusItf caller, void *context,
-                                          SLuint32 prefetchEvent) noexcept;
+        static void prefetchEventCallback(SLPrefetchStatusItf caller, void *context, SLuint32 prefetchEvent) noexcept;
 
         static void playEventCallback(SLPlayItf caller, void *context, SLuint32 playEvent) noexcept;
 

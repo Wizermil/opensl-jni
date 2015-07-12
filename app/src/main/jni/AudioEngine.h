@@ -17,34 +17,29 @@
 
 extern "C"
 {
-JNIEnv *getJNIEnv();
+    JNIEnv *getJNIEnv();
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved);
-JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved);
+    JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved);
+    JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved);
 
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_init(JNIEnv *env, jobject thiz,
-                                                                    jstring path, jfloat volume,
-                                                                    jboolean loop);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_play(JNIEnv *env, jobject thiz);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_stop(JNIEnv *env, jobject thiz);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_pause(JNIEnv *env, jobject thiz);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_resume(JNIEnv *env, jobject thiz);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_setParams(JNIEnv *env, jobject thiz,
-                                                                         jfloat pitch, jfloat pan,
-                                                                         jfloat volume);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_setVolume(JNIEnv *env, jobject thiz,
-                                                                         jfloat volume);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_init(JNIEnv *env, jobject thiz, jstring path, jfloat volume, jboolean loop);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_play(JNIEnv *env, jobject thiz);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_stop(JNIEnv *env, jobject thiz);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_pause(JNIEnv *env, jobject thiz);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_resume(JNIEnv *env, jobject thiz);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_setParams(JNIEnv *env, jobject thiz, jfloat pitch, jfloat pan, jfloat volume);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioPlayer_setVolume(JNIEnv *env, jobject thiz, jfloat volume);
 
-JNIEXPORT void JNICALL Java_com_prettysimple_audio_AudioEngine_setAssetManager(JNIEnv *env,
-                                                                               jobject thiz,
-                                                                               jobject assetManager);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioEngine_pauseAll(JNIEnv *env, jobject thiz);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioEngine_resumeAll(JNIEnv *env, jobject thiz);
-JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioEngine_stopAll(JNIEnv *env, jobject thiz);
+    JNIEXPORT void JNICALL Java_com_prettysimple_audio_AudioEngine_setAssetManager(JNIEnv *env, jobject thiz, jobject assetManager);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioEngine_pauseAll(JNIEnv *env, jobject thiz);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioEngine_resumeAll(JNIEnv *env, jobject thiz);
+    JNIEXPORT bool JNICALL Java_com_prettysimple_audio_AudioEngine_stopAll(JNIEnv *env, jobject thiz);
 }
 
-namespace audio {
-    class AudioEngine {
+namespace audio
+{
+    class AudioEngine
+    {
     protected:
         AudioEngine();
 
@@ -61,8 +56,7 @@ namespace audio {
     public:
         static AudioEngine *getInstance() noexcept;
 
-        AudioPlayer *createPlayerWithPath(const std::string &fileFullPath, const float volume,
-                                          const bool loop) noexcept;
+        AudioPlayer *createPlayerWithPath(const std::string &fileFullPath, const float volume, const bool loop) noexcept;
 
         AAssetManager *getAssetManager() const noexcept;
 
@@ -80,8 +74,7 @@ namespace audio {
 
         bool resume(const int audioId) noexcept;
 
-        bool setParams(const int audioId, const float pitch, const float pan,
-                       const float volume) noexcept;
+        bool setParams(const int audioId, const float pitch, const float pan, const float volume) noexcept;
 
         bool setVolume(const int audioId, const float volume) noexcept;
 
