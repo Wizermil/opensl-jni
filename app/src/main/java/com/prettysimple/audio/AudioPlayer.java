@@ -19,8 +19,4 @@ public class AudioPlayer {
     }
 
     private int _audioId;
-
-    static {
-        System.loadLibrary("audio");
-    }
 }
