@@ -518,8 +518,8 @@ void AudioEngine::audioPlayerGc(const int sleep) noexcept
             std::unique_lock<std::mutex> lock(_pauselMutex);
             _condition.wait(lock);
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
         std::this_thread::yield();
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
     }
     _doneGc = true;
 }
