@@ -13,13 +13,6 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="75dp"
-        android:text="Pause"
-        android:id="@+id/bt_pause"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="75dp"
         android:text="Stop"
         android:id="@+id/bt_stop"
         android:layout_gravity="center_horizontal" />

@@ -1,8 +1,7 @@
 package com.prettysimple.opensl;
 
-import android.app.Activity;
-import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +12,7 @@ import java.util.Vector;
 import com.prettysimple.audio.AudioEngine;
 import com.prettysimple.audio.AudioPlayer;
 
-public class MainActivity extends Activity implements View.OnClickListener {
-
-    private AssetManager _assetManager = null;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Vector<AudioPlayer> _players;
 

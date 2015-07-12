@@ -16,12 +16,8 @@ model {
 
     android.ndk {
         moduleName = "audio"
-        toolchain = "clang"
-        toolchainVersion = "3.6"
         ldLibs += ["android", "log", "OpenSLES"]
-        CFlags += ["-std=c11"]
-        cppFlags += ["-std=c++11"]
-        stl = "c++_shared"
+        stl = "c++_static"
     }
 
     android.buildTypes {
@@ -44,6 +40,14 @@ model {
         create("x86") {
             ndk.abiFilters += "x86"
         }
-        create("fat")
+        create("x86-64") {
+            ndk.abiFilters += "x86_64"
+        }
+        create("all")
     }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.2.0'
 }
