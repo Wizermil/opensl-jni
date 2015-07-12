@@ -72,7 +72,6 @@ bool setAudioId(JNIEnv *env, jobject javaAudioPlayer, int audioId) {
  * Note: Maybe it would better to also cache JNIEnv*
  */
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-    LOGD("JNI_OnLoad");
     JNIEnv *env = nullptr;
     if (vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) != JNI_OK) {
         return JNI_ERR;
@@ -88,7 +87,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
  * Make sure that we clean all our singletons correctly if the lib must be unload
  */
 JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
-    LOGD("JNI_OnUnload");
     gVm = nullptr;
     AudioEngine::getInstance()->destroy();
 }
@@ -456,28 +454,20 @@ void AudioEngine::audioPlayerGc(const int sleep) noexcept {
         size_t playersLength = 0;
         { // We check if there is an *AudioPlayer that can be destroyed (there is a limit of AudioPlayer that can run at the same time)
             std::lock_guard<std::mutex> lock(_playersMutex);
-            LOGD("_players toto %d", _players.size());
             for (auto it = _players.begin(); it != _players.end();) {
                 if (it->second->isHeadAtEnd() && it->second->isPrefetchedSufficient() &&
                     !it->second->isLooping()) {
-                    LOGD("_players titi %d", it->second->getPlayerId());
                     it->second->stop();
-                    LOGD("_players titi end1");
                     const AudioPlayer *tmp = it->second;
                     it = _players.erase(it);
-                    LOGD("_players titi end2");
                     delete tmp;
-                    LOGD("_players titi end3");
                 }
                 else {
-                    LOGD("_players tutu %d", it->second->getPlayerId());
                     ++it;
                 }
             }
-            LOGD("_players tata");
             playersLength = _players.size();
         }
-        LOGD("_players size: %d", playersLength);
         if (playersLength <= 0) // Put the thread in stasis if there are no sounds playing
         {
             std::unique_lock<std::mutex> lock(_pauselMutex);
@@ -501,7 +491,6 @@ void AudioEngine::audioPlayerTest(const int sleep) noexcept {
             const auto &it = _players.find(audioId);
             if (it != _players.end()) {
                 it->second->stop();
-                LOGD("Stop %d", it->second->getPlayerId());
                 audioId = -1;
             }
         }
@@ -518,10 +507,8 @@ void AudioEngine::audioPlayerTest(const int sleep) noexcept {
         sound = createPlayerWithPath(soundPath, 1.f, true);
         if (sound != nullptr) {
             sound->play();
-            LOGD("Play %d", sound->getPlayerId());
             audioId = sound->getPlayerId();
         }
-        LOGD("bibi");
         std::this_thread::yield();
         std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
     }
